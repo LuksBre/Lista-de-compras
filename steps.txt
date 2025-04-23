@@ -1,0 +1,15 @@
+npx create-expo-app@latest  --template blank
+
+
+git config --global user.name LuksBre
+git config --global user.email lucasbregadioli8@gmail.com
+
+
+cd SilvinhaHealthApp
+
+npm i
+
+npx expo start --localhost --android
+
+pacote expo router.
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
