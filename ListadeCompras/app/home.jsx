@@ -1,6 +1,8 @@
 import { Alert, FlatList, ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons';
+import ItemList from '../components/ItemList';
+import { _internal_maybeHideAsync } from 'expo-router/build/utils/splash';
 
 export default function home() {
   const [textInput, setTextInput] = useState('');
@@ -23,6 +25,16 @@ export default function home() {
     }
   }
 
+  const markItemBought = itemId => {
+    const newItems = items.map((item) => {
+      if (item.id == itemId) {
+        return { ...item, bought: true}
+      }
+      return item;
+    });
+    setItems(newItems);
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
@@ -32,7 +44,7 @@ export default function home() {
       >
         <View style={styles.header}>
           <Text style={styles.title}>Lista de Produtos</Text>
-          <Ionicons name="trash" size={32} color="#fff" />
+          <Ionicons name="trash" size={32} color="#00000c0" />
         </View>   
 
         <FlatList
@@ -40,8 +52,8 @@ export default function home() {
           data={items}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => 
-            <Text style={{ fontSize: 30}}>{item.name}</Text>
-          }
+          <ItemList item={item} />  
+           }
         />
 
         <View style={styles.footer}>

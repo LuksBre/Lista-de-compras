@@ -10,7 +10,7 @@ export default function RootLayout() {
         <Stack.Screen name="home" options ={{ headerShown: false }}/>
 
       </Stack>
-      <StatusBar style="light"/>
+      <StatusBar style="dark"/>
     </>
   )
 }
