@@ -34,6 +34,47 @@ export default function home() {
     });
     setItems(newItems);
   }
+  const unmarkItemBought = itemId => {
+    const newItems = items.map((item) => {
+      if (item.id == itemId) {
+        return { ...item, bought: false}
+      }
+      return item;
+    });
+    setItems(newItems);
+  }
+
+  const removeItem = itemId => {
+    Alert.alert(
+      'Excluir Produto?', 'Confirma a exxlusão deste Produto?',
+      [
+        {
+          text: 'Sim', onPress: () => {
+            const newItems = items.filter(item => item.id != itemId)
+            setItems(newItems);
+          }
+        },
+        {
+          text: 'Cancelar', style: 'cancel'
+        }
+      ]
+    )
+  }
+
+  const removeAll = () => {
+    Alert.alert(
+      'Limpar lista?', 'Confirma a exclusão de todos os produtos?',
+      [
+        {
+          text: 'Sim',
+          onPress: () => {setItems ([])}
+        },
+        {
+          text: 'Cancelar', style: 'cancel'
+        }
+      ]
+    )
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -44,7 +85,7 @@ export default function home() {
       >
         <View style={styles.header}>
           <Text style={styles.title}>Lista de Produtos</Text>
-          <Ionicons name="trash" size={32} color="#00000c0" />
+          <Ionicons name="trash" size={32} color="#00000c0"  onPress={removeAll}/>
         </View>   
 
         <FlatList
@@ -52,7 +93,12 @@ export default function home() {
           data={items}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => 
-          <ItemList item={item} />  
+            <ItemList 
+              item={item} 
+              markItem={markItemBought}
+              unmarkItem={unmarkItemBought}
+              removeItem={removeItem}
+            />  
            }
         />
 

@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 're
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
 
-export default function ItemList({ item }) {
+export default function ItemList({ item, markItem, unmarkItem, removeItem }) {
   return (
     <View style={styles.ItemList}>
-      <Text style={styles.itemToBuy}>{item?.name}</Text>
+      <Text style={item?.bought ? styles.itemBought : styles.itemToBuy}>{item?.name}</Text>
       <TouchableOpacity style={styles.actionIcon}>
         <Ionicons name='bag-check-outline' size={24} color=''/>
       </TouchableOpacity>
