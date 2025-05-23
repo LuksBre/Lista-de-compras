@@ -1,17 +1,27 @@
-import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
 export default function ItemList({ item, markItem, unmarkItem, removeItem }) {
   return (
-    <View style={styles.ItemList}>
-      <Text style={item?.bought ? styles.itemBought : styles.itemToBuy}>{item?.name}</Text>
-      <TouchableOpacity style={styles.actionIcon}>
-        <Ionicons name='bag-check-outline' size={24} color=''/>
+    <View style={styles.itemList}>
+      <Text style={item?.bought ? styles.itemBought : styles.itemToBuy}>
+        {item?.name}
+      </Text>
+      {!item?.bought ? ( 
+      <TouchableOpacity style={styles.actionIcon} onPress={() => markItem(item.id)}>
+        <Ionicons name='bag-check-outline' size={24} color='#fff' />
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.actionIcon, { backgroundColor: "darkred"}]}>
-        <Ionicons name='trash-bin-outline' size={24} color=''/>
+    ) : (   
+      <TouchableOpacity style={styles.actionIcon} onPress={() => unmarkItem(item.id)}>
+        <Ionicons name='bag-check-outline' size={24} color='#fff' />
       </TouchableOpacity>
+    )}
+    <TouchableOpacity style={[styles.actionIcon, { backgroundColor: "darkred"}]} 
+      onPress={() => removeItem(item.id)}
+    >
+      <Ionicons name='trash-bin-outline' size={24} color='#fff' />
+    </TouchableOpacity>
     </View>
   )
 }
@@ -22,7 +32,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 7,
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: 'white',
     marginVertical: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -30,12 +40,19 @@ const styles = StyleSheet.create({
   },
   itemToBuy: {
     flex: 1,
-    color: 'black',
+    color: '#fff',
     fontSize: 24,
     textDecorationLine: 'none'
   },
+  itemBought: {
+    flex: 1,
+    color: '#fff',
+    fontSize: 24,
+    textDecorationLine: 'line-through'
+  },
+  
   actionIcon: {
-    height: 35,
+    height: 40,
     width: 40,
     borderRadius: 20,
     justifyContent: 'center',
